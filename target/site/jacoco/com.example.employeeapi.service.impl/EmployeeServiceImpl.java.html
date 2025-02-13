@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmployeeServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Employee API</a> &gt; <a href="index.source.html" class="el_package">com.example.employeeapi.service.impl</a> &gt; <span class="el_source">EmployeeServiceImpl.java</span></div><h1>EmployeeServiceImpl.java</h1><pre class="source lang-java linenums">package com.example.employeeapi.service.impl;
+
+
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.example.employeeapi.model.Employee;
+import com.example.employeeapi.repository.EmployeeRepository;
+import com.example.employeeapi.service.EmployeeService;
+import com.example.employeeapi.exception.EmployeeNotFoundException;
+import java.util.List;
+
+@Service
+<span class="fc" id="L17">@RequiredArgsConstructor</span>
+public class EmployeeServiceImpl implements EmployeeService{
+	 @Autowired
+    private EmployeeRepository employeeRepository;
+
+    public List&lt;Employee&gt; getAllEmployees() {
+<span class="fc" id="L23">        return employeeRepository.findAll();</span>
+    }
+
+    public Employee getEmployeeById(Long id) {
+<span class="fc" id="L27">        return employeeRepository.findById(id)</span>
+<span class="fc" id="L28">                .orElseThrow(() -&gt; new EmployeeNotFoundException(&quot;Employee not found with ID: &quot; + id));</span>
+    }
+
+    @Transactional
+    public List&lt;Employee&gt; saveEmployees(List&lt;Employee&gt; employees) {
+<span class="fc" id="L33">        return employeeRepository.saveAll(employees);</span>
+    }
+
+    @Transactional
+    public Employee updateEmployee(Long id, Employee updatedEmployee) {
+<span class="fc" id="L38">        Employee existingEmployee = getEmployeeById(id);</span>
+        
+<span class="fc" id="L40">        existingEmployee.setFirstName(updatedEmployee.getFirstName());</span>
+<span class="fc" id="L41">        existingEmployee.setMiddleName(updatedEmployee.getMiddleName());</span>
+<span class="fc" id="L42">        existingEmployee.setLastName(updatedEmployee.getLastName());</span>
+<span class="fc" id="L43">        existingEmployee.setSecondLastName(updatedEmployee.getSecondLastName());</span>
+<span class="fc" id="L44">        existingEmployee.setAge(updatedEmployee.getAge());</span>
+<span class="fc" id="L45">        existingEmployee.setGender(updatedEmployee.getGender());</span>
+<span class="fc" id="L46">        existingEmployee.setBirthDate(updatedEmployee.getBirthDate());</span>
+<span class="fc" id="L47">        existingEmployee.setPosition(updatedEmployee.getPosition());</span>
+
+<span class="fc" id="L49">        return employeeRepository.save(existingEmployee);</span>
+    }
+
+    @Transactional
+    public void deleteEmployee(Long id) {
+<span class="fc" id="L54">        Employee employee = getEmployeeById(id);</span>
+<span class="fc" id="L55">        employeeRepository.delete(employee);</span>
+<span class="fc" id="L56">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

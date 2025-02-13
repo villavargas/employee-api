@@ -1,0 +1,10 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Employee API,com.example.employeeapi.controller,EmployeeController,5,41,0,0,2,9,1,7,1,7
+Employee API,com.example.employeeapi.exception,GlobalExceptionHandler,68,23,2,0,13,5,4,3,3,3
+Employee API,com.example.employeeapi.exception,EmployeeNotFoundException,0,4,0,0,0,2,0,1,0,1
+Employee API,com.example.employeeapi.config,LoggingConfig,0,16,0,0,0,5,0,2,0,2
+Employee API,com.example.employeeapi.config,DataSourceConfig,0,21,0,0,0,7,0,2,0,2
+Employee API,com.example.employeeapi,EmployeeApiApplication,5,3,0,0,2,1,1,1,1,1
+Employee API,com.example.employeeapi.util,Constants,3,0,0,0,1,0,1,0,1,0
+Employee API,com.example.employeeapi.service.impl,EmployeeServiceImpl,0,78,0,0,0,18,0,7,0,7
+Employee API,com.example.employeeapi.model,Employee,0,66,0,0,0,28,0,19,0,19

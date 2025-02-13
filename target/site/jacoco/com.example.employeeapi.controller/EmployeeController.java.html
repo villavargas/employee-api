@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmployeeController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Employee API</a> &gt; <a href="index.source.html" class="el_package">com.example.employeeapi.controller</a> &gt; <span class="el_source">EmployeeController.java</span></div><h1>EmployeeController.java</h1><pre class="source lang-java linenums">package com.example.employeeapi.controller;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.example.employeeapi.model.Employee;
+import com.example.employeeapi.service.EmployeeService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
+
+@RestController
+@RequestMapping(&quot;/employees&quot;)
+<span class="fc" id="L23">@RequiredArgsConstructor</span>
+@Tag(name = &quot;Employee API&quot;, description = &quot;CRUD operations for employees&quot;)
+class EmployeeController {
+<span class="fc" id="L26">    private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);</span>
+    @Autowired
+    private EmployeeService employeeService;
+
+  
+	@GetMapping(value = &quot;/healthcheck&quot;)
+	public String healthcheck(){
+<span class="nc" id="L33">		logger.info(&quot;Status UP&quot;);</span>
+<span class="nc" id="L34">		return &quot;Status UP&quot;;</span>
+	}
+	
+
+    @GetMapping
+    @Operation(summary = &quot;Get all employees&quot;, description = &quot;Returns a list of all employees.&quot;)
+    @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Successful retrieval&quot;)
+    public ResponseEntity&lt;List&lt;Employee&gt;&gt; getAllEmployees() {
+<span class="fc" id="L42">        return ResponseEntity.ok(employeeService.getAllEmployees());</span>
+    }
+    
+    @Operation(summary = &quot;Get an employee by ID&quot;)
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Employee&gt; getEmployeeById(@PathVariable(&quot;id&quot;) Long id) {
+<span class="fc" id="L48">        return ResponseEntity.ok(employeeService.getEmployeeById(id));</span>
+    }
+    
+    @PostMapping
+    @Operation(summary = &quot;Create multiple employees&quot;)
+    @ApiResponse(responseCode = &quot;201&quot;, description = &quot;Employee created successfully&quot;)
+    public ResponseEntity&lt;List&lt;Employee&gt;&gt; createEmployees(@Valid @RequestBody List&lt;Employee&gt; employees) {
+<span class="fc" id="L55">        logger.info(&quot;Adding new or more employees: {}&quot;);</span>
+<span class="fc" id="L56">        return ResponseEntity.ok(employeeService.saveEmployees(employees));</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    @Operation(summary = &quot;Update an employee&quot;, description = &quot;Updates an existing employee by ID.&quot;)
+    @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Employee updated successfully&quot;)
+    @ApiResponse(responseCode = &quot;404&quot;, description = &quot;Employee not found&quot;)
+    public ResponseEntity&lt;Employee&gt; updateEmployee(@PathVariable(&quot;id&quot;) Long id, @RequestBody Employee employee) {
+<span class="fc" id="L64">        return ResponseEntity.ok(employeeService.updateEmployee(id, employee));</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    @Operation(summary = &quot;Delete an employee&quot;, description = &quot;Deletes an employee by ID.&quot;)
+    @ApiResponse(responseCode = &quot;204&quot;, description = &quot;Employee deleted successfully&quot;)
+    public ResponseEntity&lt;Void&gt; deleteEmployee(@PathVariable(&quot;id&quot;) Long id) {
+<span class="fc" id="L71">        employeeService.deleteEmployee(id);</span>
+<span class="fc" id="L72">        return ResponseEntity.noContent().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
